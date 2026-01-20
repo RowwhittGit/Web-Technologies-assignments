@@ -1,0 +1,83 @@
+/* Basic reset */
+* {
+    margin: 0;
+    padding: 0;
+}
+
+/* Body styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f8ff;
+    padding: 20px;
+}
+
+/* Header styling */
+header {
+    background-color: #4682b4;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Main heading */
+h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+/* Subheading */
+h2 {
+    font-size: 18px;
+}
+
+/* Section headings */
+h3 {
+    color: #333;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+/* Paragraph text */
+p {
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+/* Section boxes */
+.section-box {
+    background-color: white;
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+/* Student name styling */
+#student-name {
+    color: #ff6347;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+/* Course list */
+.course-list li {
+    color: #2e8b57;
+    margin-bottom: 5px;
+    padding: 5px;
+}
+
+/* Hobby list */
+.hobby-list li {
+    color: #9932cc;
+    margin-bottom: 5px;
+    padding: 5px;
+}
+
+/* Footer */
+footer {
+    background-color: #696969;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    margin-top: 20px;
+}
