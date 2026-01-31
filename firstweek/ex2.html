@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercise 2 - HTML Form</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <ul class="nav-list">
+            <li class="nav-item"><a href="ex1.html" class="nav-link">Exercise 1</a></li>
+            <li class="nav-item"><a href="ex2.html" class="nav-link active">Exercise 2</a></li>
+            <li class="nav-item"><a href="ex3.html" class="nav-link">Exercise 3</a></li>
+            <li class="nav-item"><a href="ex4.html" class="nav-link">Exercise 4</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <h1 class="main-heading">User Registration Form</h1>
+        <p class="paragraph">Please fill out the form below to register.</p>
+
+        <div class="form-wrapper">
+            <form action="#" method="post" class="registration-form">
+                
+                <!-- Name Input -->
+                <div class="form-group">
+                    <label for="username" class="form-label">Full Name:</label>
+                    <input type="text" id="username" name="username" class="form-input" placeholder="Enter your full name" required>
+                </div>
+
+                <!-- Gender Radio Buttons -->
+                <div class="form-group">
+                    <label class="form-label">Gender:</label>
+                    <div class="radio-group">
+                        <input type="radio" id="male" name="gender" value="male" class="form-radio">
+                        <label for="male" class="radio-label">Male</label>
+
+                        <input type="radio" id="female" name="gender" value="female" class="form-radio">
+                        <label for="female" class="radio-label">Female</label>
+
+                        <input type="radio" id="other" name="gender" value="other" class="form-radio">
+                        <label for="other" class="radio-label">Other</label>
+                    </div>
+                </div>
+
+                <!-- Hobbies Checkboxes -->
+                <div class="form-group">
+                    <label class="form-label">Favorite Hobbies:</label>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="reading" name="hobbies" value="reading" class="form-checkbox">
+                        <label for="reading" class="checkbox-label">Reading</label>
+
+                        <input type="checkbox" id="gaming" name="hobbies" value="gaming" class="form-checkbox">
+                        <label for="gaming" class="checkbox-label">Gaming</label>
+
+                        <input type="checkbox" id="sports" name="hobbies" value="sports" class="form-checkbox">
+                        <label for="sports" class="checkbox-label">Sports</label>
+
+                        <input type="checkbox" id="music" name="hobbies" value="music" class="form-checkbox">
+                        <label for="music" class="checkbox-label">Music</label>
+                    </div>
+                </div>
+
+                <!-- Textarea for Comments -->
+                <div class="form-group">
+                    <label for="comments" class="form-label">Additional Comments:</label>
+                    <textarea id="comments" name="comments" rows="5" class="form-textarea" placeholder="Enter any additional comments here..."></textarea>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="form-group">
+                    <button type="submit" class="submit-btn">Submit</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</body>
+</html>

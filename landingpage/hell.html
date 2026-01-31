@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cinematic Rocket Launch</title>
+  <style>
+/* =========================
+   RESET + VARIABLES
+========================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --neon-a: #00f7ff;
+  --neon-b: #ff00cc;
+  --neon-c: #7cff00;
+  --glass: rgba(255,255,255,0.08);
+}
+
+/* =========================
+   BASE
+========================= */
+html, body {
+  height: 100%;
+  font-family: system-ui, -apple-system, Segoe UI, sans-serif;
+  background: #020205;
+  color: white;
+  overflow: hidden;
+}
+
+/* =========================
+   AURORA BACKGROUND
+========================= */
+.aurora {
+  position: fixed;
+  inset: -50%;
+  background:
+    conic-gradient(from 0deg, var(--neon-a), var(--neon-b), var(--neon-c), var(--neon-a)),
+    radial-gradient(circle at 30% 30%, var(--neon-b), transparent 40%),
+    radial-gradient(circle at 70% 60%, var(--neon-a), transparent 45%);
+  filter: blur(140px) saturate(160%);
+  animation: auroraShift 18s infinite alternate ease-in-out;
+  z-index: -3;
+}
+
+@keyframes auroraShift {
+  0%   { transform: rotate(0deg) scale(1); }
+  100% { transform: rotate(180deg) scale(1.4); }
+}
+
+/* =========================
+   FILM GRAIN
+========================= */
+.grain {
+  position: fixed;
+  inset: 0;
+  background-image: repeating-radial-gradient(circle, rgba(255,255,255,0.05) 0 1px, transparent 1px 100%);
+  mix-blend-mode: overlay;
+  opacity: 0.08;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* =========================
+   CENTER STAGE
+========================= */
+.universe {
+  position: relative;
+  height: 100vh;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  padding: 40px;
+  perspective: 1200px;
+}
+
+/* =========================
+   HALO LIGHT
+========================= */
+.halo {
+  position: absolute;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, rgba(255,255,255,0.25), transparent 70%);
+  filter: blur(40px);
+  animation: pulse 4s infinite ease-in-out;
+  z-index: -1;
+}
+
+@keyframes pulse {
+  0%,100% { transform: scale(1); opacity: 0.6; }
+  50%     { transform: scale(1.15); opacity: 1; }
+}
+
+/* =========================
+   SIGNAL TEXT
+========================= */
+.signal {
+  font-size: 11px;
+  letter-spacing: 4px;
+  margin-bottom: 14px;
+  color: var(--neon-a);
+  text-shadow: 0 0 12px var(--neon-a);
+}
+
+/* =========================
+   TITLE (CHROMATIC GLITCH)
+========================= */
+.title {
+  font-size: clamp(2.8rem, 6vw, 4rem);
+  line-height: 1.1;
+  margin-bottom: 18px;
+  position: relative;
+}
+
+.title span {
+  background: linear-gradient(90deg, var(--neon-a), var(--neon-b));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  position: relative;
+}
+
+.title span::before,
+.title span::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  mix-blend-mode: screen;
+}
+
+.title span::before {
+  color: var(--neon-a);
+  transform: translateX(-2px);
+  opacity: 0.6;
+}
+
+.title span::after {
+  color: var(--neon-b);
+  transform: translateX(2px);
+  opacity: 0.6;
+}
+
+/* =========================
+   SUBTITLE
+========================= */
+.subtitle {
+  max-width: 520px;
+  font-size: 0.95rem;
+  opacity: 0.8;
+  margin-bottom: 36px;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+.cta {
+  display: flex;
+  gap: 18px;
+  justify-content: center;
+}
+
+.btn {
+  padding: 14px 26px;
+  border-radius: 18px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.35s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* PRIMARY */
+.primary {
+  background: linear-gradient(135deg, var(--neon-a), var(--neon-b));
+  border: none;
+  color: black;
+  box-shadow:
+    0 0 40px rgba(0,247,255,0.6),
+    inset 0 0 20px rgba(255,255,255,0.3);
+}
+
+.primary::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.6), transparent);
+  transform: translateX(-100%);
+}
+
+.primary:hover::after {
+  transform: translateX(100%);
+  transition: 0.8s;
+}
+
+.primary:hover {
+  transform: scale(1.08);
+}
+
+/* SECONDARY */
+.secondary {
+  background: transparent;
+  color: white;
+  border: 1px solid rgba(255,255,255,0.4);
+  backdrop-filter: blur(10px);
+}
+
+.secondary:hover {
+  background: rgba(255,255,255,0.15);
+  transform: scale(1.08);
+}
+
+/* =========================
+   CINEMATIC FLOAT
+========================= */
+.universe {
+  animation: floatScene 7s infinite ease-in-out;
+}
+
+@keyframes floatScene {
+  0%,100% { transform: translateY(0); }
+  50%     { transform: translateY(-18px); }
+}
+
+/* =========================
+   FLOATING STARS (PERF OPTIMIZED)
+========================= */
+.stars {
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(1px 1px at 10% 20%, white, transparent),
+    radial-gradient(1px 1px at 30% 80%, white, transparent),
+    radial-gradient(1.5px 1.5px at 70% 30%, white, transparent),
+    radial-gradient(1px 1px at 90% 60%, white, transparent),
+    radial-gradient(2px 2px at 50% 50%, white, transparent);
+  background-size: 300px 300px;
+  animation: starFloat 120s linear infinite;
+  opacity: 0.7;
+  z-index: -4;
+}
+
+@keyframes starFloat {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-1000px); }
+}
+
+/* =========================
+   MULTI FIREWORK SYSTEM
+========================= */
+.fireworks,
+.fireworks::before,
+.fireworks::after {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* BASE PARTICLE */
+.fireworks::before,
+.fireworks::after {
+  content: "";
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: transparent;
+}
+
+/* FIREWORK 1 */
+.fireworks::before {
+  left: 30%;
+  top: 40%;
+  box-shadow:
+    0 -120px #00f7ff,
+    85px -60px #ff00cc,
+    120px 0 #7cff00,
+    85px 60px #00f7ff,
+    0 120px #ff00cc,
+    -85px 60px #7cff00,
+    -120px 0 #00f7ff,
+    -85px -60px #ff00cc;
+  animation: explode1 3.8s infinite ease-out;
+}
+
+/* FIREWORK 2 */
+.fireworks::after {
+  left: 70%;
+  top: 55%;
+  box-shadow:
+    0 -100px #ffae00,
+    70px -50px #ff004c,
+    100px 0 #00ff9d,
+    70px 50px #00f7ff,
+    0 100px #ff00cc,
+    -70px 50px #7cff00,
+    -100px 0 #00f7ff,
+    -70px -50px #ff004c;
+  animation: explode2 4.6s infinite ease-out;
+}
+
+/* =========================
+   FIREWORK ANIMATIONS
+========================= */
+@keyframes explode1 {
+  0% {
+    transform: scale(0.1);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  70% {
+    transform: scale(1.6);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(2.6);
+    opacity: 0;
+  }
+}
+
+@keyframes explode2 {
+  0% {
+    transform: scale(0.1);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  75% {
+    transform: scale(1.9);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+
+/* =========================
+   FIREWORK GLOW
+========================= */
+.fireworks::before,
+.fireworks::after {
+  filter:
+    drop-shadow(0 0 6px currentColor)
+    drop-shadow(0 0 14px currentColor)
+    drop-shadow(0 0 30px currentColor);
+}
+
+.deep-stars {
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(1px 1px at 15% 25%, white, transparent),
+    radial-gradient(1px 1px at 40% 70%, white, transparent),
+    radial-gradient(1.5px 1.5px at 60% 20%, white, transparent),
+    radial-gradient(2px 2px at 80% 80%, white, transparent),
+    radial-gradient(1px 1px at 90% 40%, white, transparent);
+  background-size: 200px 200px;
+  animation: twinkle 6s infinite alternate ease-in-out;
+  opacity: 0.8;
+  z-index: -5;
+}
+
+@keyframes twinkle {
+  from { opacity: 0.4; }
+  to   { opacity: 0.9; }
+}
+
+.moon {
+  position: fixed;
+  top: 12%;
+  right: 12%;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #ffffff, #dcdcdc 60%);
+  box-shadow:
+    0 0 40px rgba(255,255,255,0.6),
+    0 0 120px rgba(255,255,255,0.3);
+  z-index: -2;
+}
+
+/* =========================
+   CINEMATIC ROCKET SYSTEM
+========================= */
+.rocket {
+  position: fixed;
+  bottom: -120px;
+  left: 50%;
+  width: 28px;
+  height: 90px;
+  background: linear-gradient(180deg, #e8e8e8 0%, #fff 30%, #d4d4d4 100%);
+  border-radius: 14px 14px 4px 4px;
+  transform: translateX(-50%);
+  animation: launch 8s infinite ease-in-out;
+  z-index: 5;
+  filter: drop-shadow(0 0 8px rgba(255,255,255,0.6));
+}
+
+/* Rocket Nose Cone */
+.rocket::before {
+  content: "";
+  position: absolute;
+  top: -22px;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-left: 14px solid transparent;
+  border-right: 14px solid transparent;
+  border-bottom: 22px solid #ff4444;
+  transform: translateX(-50%);
+  filter: drop-shadow(0 0 6px rgba(255,68,68,0.8));
+}
+
+/* Rocket Exhaust Trail */
+.rocket::after {
+  content: "";
+  position: absolute;
+  bottom: -40px;
+  left: 50%;
+  width: 12px;
+  height: 40px;
+  background: linear-gradient(180deg, 
+    rgba(255,255,255,1) 0%,
+    rgba(255,200,50,1) 20%,
+    rgba(255,120,0,1) 50%,
+    rgba(255,50,0,0.8) 80%,
+    transparent 100%);
+  transform: translateX(-50%);
+  filter: blur(3px);
+  animation: exhaustPulse 0.1s infinite alternate;
+}
+
+/* =========================
+   HOLLYWOOD-GRADE EXPLOSION
+========================= */
+
+/* Main Fireball */
+.rocket-explosion {
+  position: fixed;
+  top: 8%;
+  left: 50%;
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  background: radial-gradient(circle at center,
+    rgba(255,255,255,1) 0%,
+    rgba(255,220,100,1) 15%,
+    rgba(255,150,50,1) 30%,
+    rgba(255,80,20,1) 50%,
+    rgba(200,40,10,0.8) 70%,
+    rgba(100,20,5,0.4) 85%,
+    transparent 100%);
+  transform: translateX(-50%) scale(0);
+  animation: massiveExplosion 8s infinite ease-out;
+  z-index: 10;
+  filter: blur(0px);
+}
+
+/* Shockwave Ring */
+.rocket-explosion::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  border: 4px solid rgba(255,200,100,0.8);
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  animation: shockwave 8s infinite ease-out;
+}
+
+/* Secondary Explosion Flash */
+.rocket-explosion::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 150%;
+  height: 150%;
+  background: radial-gradient(circle,
+    rgba(255,255,255,0.9) 0%,
+    rgba(255,200,100,0.6) 30%,
+    transparent 60%);
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  animation: explosionFlash 8s infinite ease-out;
+}
+
+/* Debris Particles */
+.debris {
+  position: fixed;
+  top: 8%;
+  left: 50%;
+  width: 8px;
+  height: 8px;
+  background: transparent;
+  transform: translateX(-50%);
+  z-index: 9;
+}
+
+.debris::before {
+  content: "";
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: transparent;
+  box-shadow:
+    /* Bright debris pieces */
+    120px -80px 0 3px rgba(255,200,100,1),
+    -140px -60px 0 2px rgba(255,150,50,1),
+    80px 100px 0 4px rgba(255,100,20,1),
+    -100px 90px 0 3px rgba(255,180,80,1),
+    150px 40px 0 2px rgba(255,220,120,1),
+    -160px -20px 0 3px rgba(255,120,40,1),
+    60px -120px 0 2px rgba(255,200,100,1),
+    -80px 120px 0 4px rgba(255,160,60,1),
+    /* More debris */
+    180px -40px 0 2px rgba(200,80,20,1),
+    -190px 30px 0 3px rgba(255,190,90,1),
+    100px -100px 0 2px rgba(255,140,50,1),
+    -120px -90px 0 3px rgba(255,170,70,1),
+    140px 80px 0 2px rgba(255,200,100,1),
+    -150px 70px 0 4px rgba(255,120,40,1);
+  animation: debrisFly 8s infinite ease-out;
+}
+
+/* Smoke Plume */
+.smoke {
+  position: fixed;
+  top: 8%;
+  left: 50%;
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle,
+    rgba(80,80,80,0.6) 0%,
+    rgba(60,60,60,0.4) 40%,
+    rgba(40,40,40,0.2) 70%,
+    transparent 100%);
+  border-radius: 50%;
+  transform: translateX(-50%) scale(0);
+  animation: smokeExpand 8s infinite ease-out;
+  z-index: 8;
+  filter: blur(20px);
+}
+
+/* =========================
+   SCREEN SHAKE ON IMPACT
+========================= */
+@keyframes screenShake {
+  0%, 48% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(-4px, 2px);
+  }
+  51% {
+    transform: translate(3px, -3px);
+  }
+  52% {
+    transform: translate(-2px, 3px);
+  }
+  53% {
+    transform: translate(4px, -1px);
+  }
+  54% {
+    transform: translate(-3px, -2px);
+  }
+  55% {
+    transform: translate(2px, 2px);
+  }
+  56%, 100% {
+    transform: translate(0, 0);
+  }
+}
+
+body {
+  animation: screenShake 8s infinite ease-out;
+}
+
+/* =========================
+   EXPLOSION LIGHT BURST
+========================= */
+.light-burst {
+  position: fixed;
+  top: 8%;
+  left: 50%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle,
+    rgba(255,255,255,0.4) 0%,
+    rgba(255,200,100,0.2) 30%,
+    transparent 60%);
+  border-radius: 50%;
+  transform: translateX(-50%) scale(0);
+  animation: lightBurst 8s infinite ease-out;
+  z-index: 11;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+/* =========================
+   SECONDARY DEBRIS LAYER
+========================= */
+.debris-secondary {
+  position: fixed;
+  top: 8%;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  background: transparent;
+  transform: translateX(-50%);
+  z-index: 7;
+}
+
+.debris-secondary::before {
+  content: "";
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: transparent;
+  box-shadow:
+    200px -100px 0 2px rgba(150,150,150,0.8),
+    -220px -80px 0 3px rgba(120,120,120,0.7),
+    160px 120px 0 2px rgba(100,100,100,0.6),
+    -180px 100px 0 3px rgba(140,140,140,0.8),
+    240px 40px 0 2px rgba(130,130,130,0.7),
+    -260px -40px 0 2px rgba(110,110,110,0.6),
+    80px -160px 0 3px rgba(150,150,150,0.8),
+    -100px 160px 0 2px rgba(120,120,120,0.7);
+  animation: debrisFlySlow 8s infinite ease-out;
+}
+
+/* =========================
+   CINEMATIC KEYFRAME ANIMATIONS
+========================= */
+
+/* Rocket Launch Sequence */
+@keyframes launch {
+  0% {
+    bottom: -120px;
+    opacity: 0;
+    transform: translateX(-50%) rotate(0deg);
+  }
+  15% {
+    opacity: 1;
+  }
+  40% {
+    bottom: 50%;
+    transform: translateX(-50%) rotate(0deg);
+  }
+  48% {
+    bottom: 80%;
+    opacity: 1;
+    transform: translateX(-50%) rotate(2deg);
+  }
+  50% {
+    bottom: 92%;
+    opacity: 0;
+    transform: translateX(-50%) rotate(0deg) scale(0.5);
+  }
+  100% {
+    bottom: 92%;
+    opacity: 0;
+  }
+}
+
+/* Exhaust Flicker */
+@keyframes exhaustPulse {
+  from { 
+    height: 40px;
+    opacity: 1;
+  }
+  to { 
+    height: 55px;
+    opacity: 0.85;
+  }
+}
+
+/* Main Explosion Blast */
+@keyframes massiveExplosion {
+  0%, 48% {
+    transform: translateX(-50%) scale(0);
+    opacity: 0;
+    filter: blur(0px) brightness(1);
+  }
+  50% {
+    transform: translateX(-50%) scale(0.3);
+    opacity: 1;
+    filter: blur(0px) brightness(3);
+  }
+  52% {
+    transform: translateX(-50%) scale(0.8);
+    opacity: 1;
+    filter: blur(2px) brightness(2.5);
+  }
+  56% {
+    transform: translateX(-50%) scale(1.4);
+    opacity: 1;
+    filter: blur(4px) brightness(2);
+  }
+  62% {
+    transform: translateX(-50%) scale(2);
+    opacity: 0.9;
+    filter: blur(8px) brightness(1.5);
+  }
+  70% {
+    transform: translateX(-50%) scale(2.8);
+    opacity: 0.6;
+    filter: blur(15px) brightness(1.2);
+  }
+  85% {
+    transform: translateX(-50%) scale(3.5);
+    opacity: 0.2;
+    filter: blur(25px) brightness(1);
+  }
+  100% {
+    transform: translateX(-50%) scale(4);
+    opacity: 0;
+    filter: blur(30px) brightness(0.8);
+  }
+}
+
+/* Shockwave Ring */
+@keyframes shockwave {
+  0%, 48% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+    border-width: 8px;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(0.5);
+    opacity: 1;
+    border-width: 6px;
+  }
+  55% {
+    transform: translate(-50%, -50%) scale(1.5);
+    opacity: 0.8;
+    border-width: 4px;
+  }
+  65% {
+    transform: translate(-50%, -50%) scale(3);
+    opacity: 0.4;
+    border-width: 2px;
+  }
+  80% {
+    transform: translate(-50%, -50%) scale(5);
+    opacity: 0;
+    border-width: 1px;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Bright Flash */
+@keyframes explosionFlash {
+  0%, 48% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(0.8);
+    opacity: 1;
+  }
+  52% {
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 0.7;
+  }
+  56% {
+    transform: translate(-50%, -50%) scale(1.5);
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* Flying Debris */
+@keyframes debrisFly {
+  0%, 48% {
+    transform: scale(0) rotate(0deg);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+  55% {
+    transform: scale(1.3) rotate(45deg);
+    opacity: 1;
+  }
+  70% {
+    transform: scale(1.8) rotate(180deg);
+    opacity: 0.7;
+  }
+  85% {
+    transform: scale(2.5) rotate(360deg);
+    opacity: 0.3;
+  }
+  100% {
+    transform: scale(3.2) rotate(540deg);
+    opacity: 0;
+  }
+}
+
+/* Slower Debris */
+@keyframes debrisFlySlow {
+  0%, 50% {
+    transform: scale(0) rotate(0deg);
+    opacity: 0;
+  }
+  52% {
+    transform: scale(1) rotate(0deg);
+    opacity: 0.8;
+  }
+  70% {
+    transform: scale(1.5) rotate(90deg);
+    opacity: 0.6;
+  }
+  85% {
+    transform: scale(2.2) rotate(200deg);
+    opacity: 0.3;
+  }
+  100% {
+    transform: scale(3) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* Smoke Cloud */
+@keyframes smokeExpand {
+  0%, 52% {
+    transform: translateX(-50%) scale(0);
+    opacity: 0;
+  }
+  55% {
+    transform: translateX(-50%) scale(0.5);
+    opacity: 0.6;
+  }
+  65% {
+    transform: translateX(-50%) scale(1.2) translateY(20px);
+    opacity: 0.5;
+  }
+  80% {
+    transform: translateX(-50%) scale(2) translateY(60px);
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateX(-50%) scale(3) translateY(120px);
+    opacity: 0;
+  }
+}
+
+/* Light Burst */
+@keyframes lightBurst {
+  0%, 48% {
+    transform: translateX(-50%) scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: translateX(-50%) scale(0.5);
+    opacity: 0.8;
+  }
+  53% {
+    transform: translateX(-50%) scale(1);
+    opacity: 0.5;
+  }
+  58% {
+    transform: translateX(-50%) scale(1.5);
+    opacity: 0;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* =========================
+   ACCESSIBILITY / BEST PRACTICE
+========================= */
+@media (prefers-reduced-motion: reduce) {
+  .stars,
+  .fireworks::before,
+  .fireworks::after,
+  .rocket,
+  .rocket-explosion,
+  .deep-stars,
+  .debris,
+  .debris-secondary,
+  .smoke,
+  .light-burst,
+  body {
+    animation: none;
+  }
+}
+  </style>
+</head>
+<body>
+  <!-- Background layers -->
+  <div class="aurora"></div>
+  <div class="deep-stars"></div>
+  <div class="stars"></div>
+  <div class="grain"></div>
+  <div class="fireworks"></div>
+  <div class="moon"></div>
+
+  <!-- Rocket & Explosion System -->
+  <div class="rocket"></div>
+  <div class="light-burst"></div>
+  <div class="rocket-explosion"></div>
+  <div class="debris"></div>
+  <div class="debris-secondary"></div>
+  <div class="smoke"></div>
+
+  <!-- Main content -->
+  <main class="universe">
+    <div class="halo"></div>
+    <div class="signal">TRANSMISSION ACTIVE</div>
+    <h1 class="title">
+      <span data-text="Beyond the Horizon">Beyond the Horizon</span>
+    </h1>
+    <p class="subtitle">
+      Where dreams ignite and possibilities explode into reality. Watch the cosmos come alive.
+    </p>
+    <div class="cta">
+      <button class="btn primary">Launch Experience</button>
+      <button class="btn secondary">Explore More</button>
+    </div>
+  </main>
+</body>
+</html>

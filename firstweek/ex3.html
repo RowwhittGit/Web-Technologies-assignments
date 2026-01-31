@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercise 3 - HTML Tables</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <ul class="nav-list">
+            <li class="nav-item"><a href="ex1.html" class="nav-link">Exercise 1</a></li>
+            <li class="nav-item"><a href="ex2.html" class="nav-link">Exercise 2</a></li>
+            <li class="nav-item"><a href="ex3.html" class="nav-link active">Exercise 3</a></li>
+            <li class="nav-item"><a href="ex4.html" class="nav-link">Exercise 4</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <h1 class="main-heading">Student Information Table</h1>
+
+        <div class="table-wrapper">
+            <table class="data-table" border="1">
+                <!-- Table Caption -->
+                <caption class="table-caption">Student Records - Semester 1, 2024</caption>
+
+                <!-- Table Header -->
+                <thead class="table-header">
+                    <tr class="header-row">
+                        <th class="table-heading">Student ID</th>
+                        <th class="table-heading">Name</th>
+                        <th class="table-heading">Age</th>
+                        <th class="table-heading">City</th>
+                        <th class="table-heading">Course</th>
+                    </tr>
+                </thead>
+
+                <!-- Table Body -->
+                <tbody class="table-body">
+                    <tr class="table-row">
+                        <td class="table-data">001</td>
+                        <td class="table-data">John Doe</td>
+                        <td class="table-data">21</td>
+                        <td class="table-data">New York</td>
+                        <td class="table-data">Computer Science</td>
+                    </tr>
+
+                    <tr class="table-row">
+                        <td class="table-data">002</td>
+                        <td class="table-data">Jane Smith</td>
+                        <td class="table-data">22</td>
+                        <td class="table-data">Los Angeles</td>
+                        <td class="table-data">Information Technology</td>
+                    </tr>
+
+                    <tr class="table-row">
+                        <td class="table-data">003</td>
+                        <td class="table-data">Mike Johnson</td>
+                        <td class="table-data">20</td>
+                        <td class="table-data">Chicago</td>
+                        <td class="table-data">Software Engineering</td>
+                    </tr>
+
+                    <!-- Row with merged cells (colspan) -->
+                    <tr class="table-row merged-row">
+                        <td class="table-data">004</td>
+                        <td class="table-data">Sarah Williams</td>
+                        <td class="table-data">23</td>
+                        <td class="table-data" colspan="2">Boston - Data Science (Double Major)</td>
+                    </tr>
+
+                    <tr class="table-row">
+                        <td class="table-data">005</td>
+                        <td class="table-data">David Brown</td>
+                        <td class="table-data">21</td>
+                        <td class="table-data">Houston</td>
+                        <td class="table-data">Cybersecurity</td>
+                    </tr>
+
+                    <!-- Row with rowspan example -->
+                    <tr class="table-row">
+                        <td class="table-data">006</td>
+                        <td class="table-data">Emily Davis</td>
+                        <td class="table-data" rowspan="2">22</td>
+                        <td class="table-data">Phoenix</td>
+                        <td class="table-data">Web Development</td>
+                    </tr>
+
+                    <tr class="table-row">
+                        <td class="table-data">007</td>
+                        <td class="table-data">Chris Martinez</td>
+                        <td class="table-data">Seattle</td>
+                        <td class="table-data">Mobile Development</td>
+                    </tr>
+                </tbody>
+
+                <!-- Table Footer (optional) -->
+                <tfoot class="table-footer">
+                    <tr class="footer-row">
+                        <td class="table-data footer-data" colspan="5">Total Students: 7</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

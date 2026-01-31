@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Portal - University Dashboard</title>
+</head>
+<body>
+  
+  <!-- Skip navigation link for accessibility -->
+  <a href="#main-content">Skip to main content</a>
+  
+  <!-- HEADER: Site branding and main navigation -->
+  <header>
+    <div>
+      <img src="university-logo.png" alt="University Name Logo" width="80" height="80">
+      <h1>Student Portal</h1>
+    </div>
+    
+    <!-- Main Navigation -->
+    <nav aria-label="Main navigation">
+      <ul>
+        <li><a href="#dashboard">Dashboard</a></li>
+        <li><a href="#courses">My Courses</a></li>
+        <li><a href="#grades">Grades</a></li>
+        <li><a href="#library">Library</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#profile">My Profile</a></li>
+      </ul>
+    </nav>
+    
+    <!-- User Account Info -->
+    <div>
+      <p>Welcome back, <strong>John Doe</strong></p>
+      <p>Student ID: 2024-CS-001</p>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main id="main-content">
+    
+    <!-- Welcome Section -->
+    <section>
+      <h2>Dashboard Overview</h2>
+      <p>You have <strong>3 assignments</strong> due this week and <strong>2 unread announcements</strong>.</p>
+      <p>Next class: <time datetime="2025-01-19T09:00">Web Development - Tomorrow at 9:00 AM</time></p>
+    </section>
+
+    <!-- ANNOUNCEMENTS Section -->
+    <section>
+      <h2>Latest Announcements</h2>
+      
+      <!-- Announcement 1 -->
+      <article>
+        <header>
+          <h3>Spring 2025 Registration Opens Monday</h3>
+          <p>
+            Posted by: <span>Academic Office</span> | 
+            <time datetime="2025-01-15T10:30">January 15, 2025 at 10:30 AM</time>
+          </p>
+        </header>
+        <p>
+          Course registration for the Spring 2025 semester will begin on Monday, January 20 at 8:00 AM. 
+          Students are advised to check their academic advisor's recommendations before registering. 
+          Priority registration is given to seniors, followed by juniors, sophomores, and freshmen.
+        </p>
+        <p>
+          <strong>Important:</strong> Make sure your account has no holds before attempting to register.
+        </p>
+        <a href="#announcement-1">Read full announcement</a>
+      </article>
+
+      <!-- Announcement 2 -->
+      <article>
+        <header>
+          <h3>Library Extended Hours During Exam Week</h3>
+          <p>
+            Posted by: <span>Library Services</span> | 
+            <time datetime="2025-01-14T14:00">January 14, 2025 at 2:00 PM</time>
+          </p>
+        </header>
+        <p>
+          The Main Library will operate 24/7 starting Monday, January 20 through Friday, January 31 
+          to support students during the examination period. Study rooms can be reserved online.
+        </p>
+        <p>
+          Additional resources: Free coffee will be available from 10 PM to 6 AM on all floors.
+        </p>
+        <a href="#announcement-2">Read full announcement</a>
+      </article>
+
+      <!-- Announcement 3 -->
+      <article>
+        <header>
+          <h3>Career Fair - Meet Top Employers</h3>
+          <p>
+            Posted by: <span>Career Services</span> | 
+            <time datetime="2025-01-13T09:00">January 13, 2025 at 9:00 AM</time>
+          </p>
+        </header>
+        <p>
+          The Spring Career Fair will take place on Friday, January 24 from 10:00 AM to 4:00 PM 
+          in the Student Center Main Hall. Over 50 employers from various industries will be present 
+          including technology companies, financial institutions, and healthcare organizations.
+        </p>
+        <p>
+          Students should bring multiple copies of their resume and dress professionally.
+        </p>
+        <a href="#announcement-3">Read full announcement</a>
+      </article>
+    </section>
+
+    <!-- QUICK LINKS Sidebar -->
+    <aside>
+      <h2>Quick Access</h2>
+      <nav aria-label="Quick access links">
+        <ul>
+          <li><a href="#view-grades">View My Grades</a></li>
+          <li><a href="#class-schedule">Class Schedule</a></li>
+          <li><a href="#student-email">Student Email</a></li>
+          <li><a href="#library-resources">Library Resources</a></li>
+          <li><a href="#pay-fees">Pay Tuition & Fees</a></li>
+          <li><a href="#request-transcript">Request Transcript</a></li>
+          <li><a href="#it-support">IT Support</a></li>
+          <li><a href="#housing">Housing Services</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- UPCOMING EVENTS Calendar -->
+    <section>
+      <h2>Important Upcoming Dates</h2>
+      <table>
+        <caption>Academic Calendar - Spring 2025</caption>
+        <thead>
+          <tr>
+            <th scope="col">Date</th>
+            <th scope="col">Event</th>
+            <th scope="col">Details</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><time datetime="2025-01-20">January 20, 2025</time></td>
+            <td>Registration Opens</td>
+            <td>Spring semester course registration begins</td>
+          </tr>
+          <tr>
+            <td><time datetime="2025-01-24">January 24, 2025</time></td>
+            <td>Career Fair</td>
+            <td>Student Center, 10 AM - 4 PM</td>
+          </tr>
+          <tr>
+            <td><time datetime="2025-01-25">January 25, 2025</time></td>
+            <td>Add/Drop Deadline</td>
+            <td>Last day to modify course schedule</td>
+          </tr>
+          <tr>
+            <td><time datetime="2025-02-10">February 10, 2025</time></td>
+            <td>Midterm Exams Begin</td>
+            <td>Check individual course schedules</td>
+          </tr>
+          <tr>
+            <td><time datetime="2025-02-28">February 28, 2025</time></td>
+            <td>Spring Break Starts</td>
+            <td>Classes resume March 10</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- FORM SUBMISSION Section -->
+    <section>
+      <h2>Submit Support Request</h2>
+      <p>Need help? Submit a support ticket and our team will respond within 24 hours.</p>
+      
+      <form action="/submit-request" method="post">
+        
+        <!-- Student Information -->
+        <fieldset>
+          <legend>Your Information</legend>
+          
+          <div>
+            <label for="student-name">Full Name:</label>
+            <input type="text" id="student-name" name="student-name" required>
+          </div>
+          
+          <div>
+            <label for="student-id">Student ID:</label>
+            <input type="text" id="student-id" name="student-id" required pattern="[0-9]{4}-[A-Z]{2}-[0-9]{3}">
+            <small>Format: 2024-CS-001</small>
+          </div>
+          
+          <div>
+            <label for="student-email">Email Address:</label>
+            <input type="email" id="student-email" name="student-email" required>
+          </div>
+          
+          <div>
+            <label for="student-phone">Phone Number:</label>
+            <input type="tel" id="student-phone" name="student-phone">
+          </div>
+        </fieldset>
+
+        <!-- Request Details -->
+        <fieldset>
+          <legend>Request Details</legend>
+          
+          <div>
+            <label for="request-category">Category:</label>
+            <select id="request-category" name="request-category" required>
+              <option value="">-- Select Category --</option>
+              <option value="academic">Academic Support</option>
+              <option value="technical">Technical Issue</option>
+              <option value="financial">Financial Aid</option>
+              <option value="registration">Registration Help</option>
+              <option value="housing">Housing Services</option>
+              <option value="library">Library Services</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          
+          <div>
+            <label for="priority">Priority Level:</label>
+            <select id="priority" name="priority" required>
+              <option value="low">Low - General inquiry</option>
+              <option value="medium" selected>Medium - Need response soon</option>
+              <option value="high">High - Urgent issue</option>
+            </select>
+          </div>
+          
+          <div>
+            <label for="subject">Subject:</label>
+            <input type="text" id="subject" name="subject" required maxlength="100">
+          </div>
+          
+          <div>
+            <label for="description">Describe your issue:</label>
+            <textarea id="description" name="description" rows="6" required minlength="20"></textarea>
+            <small>Please provide detailed information to help us assist you better (minimum 20 characters)</small>
+          </div>
+          
+          <div>
+            <label for="attachment">Attach file (optional):</label>
+            <input type="file" id="attachment" name="attachment" accept=".pdf,.doc,.docx,.jpg,.png">
+            <small>Accepted formats: PDF, Word documents, Images (Max 5MB)</small>
+          </div>
+        </fieldset>
+
+        <!-- Contact Preferences -->
+        <fieldset>
+          <legend>Contact Preferences</legend>
+          
+          <p>How would you like us to contact you?</p>
+          
+          <div>
+            <input type="checkbox" id="contact-email" name="contact-method" value="email" checked>
+            <label for="contact-email">Email</label>
+          </div>
+          
+          <div>
+            <input type="checkbox" id="contact-phone" name="contact-method" value="phone">
+            <label for="contact-phone">Phone</label>
+          </div>
+          
+          <div>
+            <input type="checkbox" id="contact-sms" name="contact-method" value="sms">
+            <label for="contact-sms">SMS/Text Message</label>
+          </div>
+        </fieldset>
+
+        <!-- Terms Agreement -->
+        <div>
+          <input type="checkbox" id="terms" name="terms" required>
+          <label for="terms">I confirm that the information provided is accurate and I agree to the <a href="#terms-conditions">Terms and Conditions</a></label>
+        </div>
+
+        <!-- Submit Buttons -->
+        <div>
+          <button type="submit">Submit Request</button>
+          <button type="reset">Clear Form</button>
+        </div>
+        
+      </form>
+    </section>
+
+    <!-- Additional Resources -->
+    <section>
+      <h2>Helpful Resources</h2>
+      <ul>
+        <li><a href="#student-handbook">Student Handbook</a></li>
+        <li><a href="#academic-calendar">Full Academic Calendar</a></li>
+        <li><a href="#tutoring">Free Tutoring Services</a></li>
+        <li><a href="#counseling">Counseling Services</a></li>
+        <li><a href="#health">Health Services</a></li>
+        <li><a href="#faqs">Frequently Asked Questions</a></li>
+      </ul>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    
+    <!-- Footer Navigation -->
+    <nav aria-label="Footer navigation">
+      <h2>Student Support</h2>
+      <ul>
+        <li><a href="#help-desk">Help Desk</a></li>
+        <li><a href="#it-support">IT Support</a></li>
+        <li><a href="#counseling-services">Counseling Services</a></li>
+        <li><a href="#career-services">Career Center</a></li>
+        <li><a href="#disability-services">Disability Services</a></li>
+        <li><a href="#international-office">International Student Office</a></li>
+      </ul>
+    </nav>
+
+    <!-- Contact Information -->
+    <section>
+      <h2>Contact Us</h2>
+      <address>
+        <strong>Student Services Office</strong><br>
+        Main Administration Building, Room 205<br>
+        123 University Avenue<br>
+        City, State 12345<br><br>
+        
+        Phone: <a href="tel:+11234567890">(123) 456-7890</a><br>
+        Email: <a href="mailto:support@university.edu">support@university.edu</a><br>
+        
+        <strong>Office Hours:</strong><br>
+        Monday - Friday: 8:00 AM - 5:00 PM<br>
+        Saturday: 9:00 AM - 1:00 PM<br>
+        Sunday: Closed
+      </address>
+    </section>
+
+    <!-- Social Media Links -->
+    <section>
+      <h2>Connect With Us</h2>
+      <nav aria-label="Social media">
+        <ul>
+          <li><a href="#facebook">Facebook</a></li>
+          <li><a href="#twitter">Twitter</a></li>
+          <li><a href="#instagram">Instagram</a></li>
+          <li><a href="#linkedin">LinkedIn</a></li>
+          <li><a href="#youtube">YouTube</a></li>
+        </ul>
+      </nav>
+    </section>
+
+    <!-- Legal Links -->
+    <nav aria-label="Legal">
+      <ul>
+        <li><a href="#privacy-policy">Privacy Policy</a></li>
+        <li><a href="#terms-of-use">Terms of Use</a></li>
+        <li><a href="#accessibility">Accessibility Statement</a></li>
+        <li><a href="#sitemap">Site Map</a></li>
+      </ul>
+    </nav>
+
+    <!-- Copyright -->
+    <p>
+      <small>&copy; 2025 University Name. All rights reserved.</small>
+    </p>
+    
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,558 @@
+/* =========================
+   RESET + VARIABLES
+========================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --neon-a: #00f7ff;
+  --neon-b: #ff00cc;
+  --neon-c: #7cff00;
+  --glass: rgba(255,255,255,0.08);
+}
+
+/* =========================
+   BASE
+========================= */
+html, body {
+  height: 100%;
+  font-family: system-ui, -apple-system, Segoe UI, sans-serif;
+  background: #020205;
+  color: white;
+  overflow: hidden;
+}
+
+/* =========================
+   AURORA BACKGROUND
+========================= */
+.aurora {
+  position: fixed;
+  inset: -50%;
+  background:
+    conic-gradient(from 0deg, var(--neon-a), var(--neon-b), var(--neon-c), var(--neon-a)),
+    radial-gradient(circle at 30% 30%, var(--neon-b), transparent 40%),
+    radial-gradient(circle at 70% 60%, var(--neon-a), transparent 45%);
+  filter: blur(140px) saturate(160%);
+  animation: auroraShift 18s infinite alternate ease-in-out;
+  z-index: -3;
+}
+
+@keyframes auroraShift {
+  0%   { transform: rotate(0deg) scale(1); }
+  100% { transform: rotate(180deg) scale(1.4); }
+}
+
+/* =========================
+   FILM GRAIN
+========================= */
+.grain {
+  position: fixed;
+  inset: 0;
+  background-image: repeating-radial-gradient(circle, rgba(255,255,255,0.05) 0 1px, transparent 1px 100%);
+  mix-blend-mode: overlay;
+  opacity: 0.08;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* =========================
+   CENTER STAGE
+========================= */
+.universe {
+  position: relative;
+  height: 100vh;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  padding: 40px;
+  perspective: 1200px;
+}
+
+/* =========================
+   HALO LIGHT
+========================= */
+.halo {
+  position: absolute;
+  width: 420px;
+  height: 420px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, rgba(255,255,255,0.25), transparent 70%);
+  filter: blur(40px);
+  animation: pulse 4s infinite ease-in-out;
+  z-index: -1;
+}
+
+@keyframes pulse {
+  0%,100% { transform: scale(1); opacity: 0.6; }
+  50%     { transform: scale(1.15); opacity: 1; }
+}
+
+/* =========================
+   SIGNAL TEXT
+========================= */
+.signal {
+  font-size: 11px;
+  letter-spacing: 4px;
+  margin-bottom: 14px;
+  color: var(--neon-a);
+  text-shadow: 0 0 12px var(--neon-a);
+}
+
+/* =========================
+   TITLE (CHROMATIC GLITCH)
+========================= */
+.title {
+  font-size: clamp(2.8rem, 6vw, 4rem);
+  line-height: 1.1;
+  margin-bottom: 18px;
+  position: relative;
+}
+
+.title span {
+  background: linear-gradient(90deg, var(--neon-a), var(--neon-b));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  position: relative;
+}
+
+.title span::before,
+.title span::after {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  mix-blend-mode: screen;
+}
+
+.title span::before {
+  color: var(--neon-a);
+  transform: translateX(-2px);
+  opacity: 0.6;
+}
+
+.title span::after {
+  color: var(--neon-b);
+  transform: translateX(2px);
+  opacity: 0.6;
+}
+
+/* =========================
+   SUBTITLE
+========================= */
+.subtitle {
+  max-width: 520px;
+  font-size: 0.95rem;
+  opacity: 0.8;
+  margin-bottom: 36px;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+.cta {
+  display: flex;
+  gap: 18px;
+  justify-content: center;
+}
+
+.btn {
+  padding: 14px 26px;
+  border-radius: 18px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.35s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* PRIMARY */
+.primary {
+  background: linear-gradient(135deg, var(--neon-a), var(--neon-b));
+  border: none;
+  color: black;
+  box-shadow:
+    0 0 40px rgba(0,247,255,0.6),
+    inset 0 0 20px rgba(255,255,255,0.3);
+}
+
+.primary::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.6), transparent);
+  transform: translateX(-100%);
+}
+
+.primary:hover::after {
+  transform: translateX(100%);
+  transition: 0.8s;
+}
+
+.primary:hover {
+  transform: scale(1.08);
+}
+
+/* SECONDARY */
+.secondary {
+  background: transparent;
+  color: white;
+  border: 1px solid rgba(255,255,255,0.4);
+  backdrop-filter: blur(10px);
+}
+
+.secondary:hover {
+  background: rgba(255,255,255,0.15);
+  transform: scale(1.08);
+}
+
+/* =========================
+   CINEMATIC FLOAT
+========================= */
+.universe {
+  animation: floatScene 7s infinite ease-in-out;
+}
+
+@keyframes floatScene {
+  0%,100% { transform: translateY(0); }
+  50%     { transform: translateY(-18px); }
+}
+/* =========================
+   FLOATING STARS (PERF OPTIMIZED)
+========================= */
+.stars {
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(1px 1px at 10% 20%, white, transparent),
+    radial-gradient(1px 1px at 30% 80%, white, transparent),
+    radial-gradient(1.5px 1.5px at 70% 30%, white, transparent),
+    radial-gradient(1px 1px at 90% 60%, white, transparent),
+    radial-gradient(2px 2px at 50% 50%, white, transparent);
+  background-size: 300px 300px;
+  animation: starFloat 120s linear infinite;
+  opacity: 0.7;
+  z-index: -4;
+}
+
+@keyframes starFloat {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-1000px); }
+}
+
+/* =========================
+   FIREWORKS (CSS ONLY)
+========================= */
+.fireworks {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -2;
+}
+
+.fireworks::before,
+.fireworks::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: transparent;
+  box-shadow:
+    0 -120px #00f7ff,
+    85px -60px #ff00cc,
+    120px 0 #7cff00,
+    85px 60px #00f7ff,
+    0 120px #ff00cc,
+    -85px 60px #7cff00,
+    -120px 0 #00f7ff,
+    -85px -60px #ff00cc;
+  animation: explode 3.5s infinite ease-out;
+}
+
+.fireworks::after {
+  animation-delay: 1.75s;
+  transform: translate(-200px, -150px);
+}
+
+@keyframes explode {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  70% {
+    transform: scale(1.4);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
+}
+
+/* =========================
+   ACCESSIBILITY / BEST PRACTICE
+========================= */
+@media (prefers-reduced-motion: reduce) {
+  .stars,
+  .fireworks::before,
+  .fireworks::after {
+    animation: none;
+  }
+}
+
+
+/* =========================
+   MULTI FIREWORK SYSTEM
+========================= */
+.fireworks,
+.fireworks::before,
+.fireworks::after {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+}
+
+/* BASE PARTICLE */
+.fireworks::before,
+.fireworks::after {
+  content: "";
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: transparent;
+}
+
+/* FIREWORK 1 */
+.fireworks::before {
+  left: 30%;
+  top: 40%;
+  box-shadow:
+    0 -120px #00f7ff,
+    85px -60px #ff00cc,
+    120px 0 #7cff00,
+    85px 60px #00f7ff,
+    0 120px #ff00cc,
+    -85px 60px #7cff00,
+    -120px 0 #00f7ff,
+    -85px -60px #ff00cc;
+  animation: explode1 3.8s infinite ease-out;
+}
+
+/* FIREWORK 2 */
+.fireworks::after {
+  left: 70%;
+  top: 55%;
+  box-shadow:
+    0 -100px #ffae00,
+    70px -50px #ff004c,
+    100px 0 #00ff9d,
+    70px 50px #00f7ff,
+    0 100px #ff00cc,
+    -70px 50px #7cff00,
+    -100px 0 #00f7ff,
+    -70px -50px #ff004c;
+  animation: explode2 4.6s infinite ease-out;
+}
+
+/* =========================
+   FIREWORK ANIMATIONS
+========================= */
+@keyframes explode1 {
+  0% {
+    transform: scale(0.1);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  70% {
+    transform: scale(1.6);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(2.6);
+    opacity: 0;
+  }
+}
+
+@keyframes explode2 {
+  0% {
+    transform: scale(0.1);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  75% {
+    transform: scale(1.9);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(3);
+    opacity: 0;
+  }
+}
+
+/* =========================
+   FIREWORK GLOW
+========================= */
+.fireworks::before,
+.fireworks::after {
+  filter:
+    drop-shadow(0 0 6px currentColor)
+    drop-shadow(0 0 14px currentColor)
+    drop-shadow(0 0 30px currentColor);
+}
+
+/* =========================
+   ACCESSIBILITY
+========================= */
+@media (prefers-reduced-motion: reduce) {
+  .fireworks::before,
+  .fireworks::after {
+    animation: none;
+  }
+}
+.deep-stars {
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(1px 1px at 15% 25%, white, transparent),
+    radial-gradient(1px 1px at 40% 70%, white, transparent),
+    radial-gradient(1.5px 1.5px at 60% 20%, white, transparent),
+    radial-gradient(2px 2px at 80% 80%, white, transparent),
+    radial-gradient(1px 1px at 90% 40%, white, transparent);
+  background-size: 200px 200px;
+  animation: twinkle 6s infinite alternate ease-in-out;
+  opacity: 0.8;
+  z-index: -5;
+}
+
+@keyframes twinkle {
+  from { opacity: 0.4; }
+  to   { opacity: 0.9; }
+}
+
+
+.moon {
+  position: fixed;
+  top: 12%;
+  right: 12%;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #ffffff, #dcdcdc 60%);
+  box-shadow:
+    0 0 40px rgba(255,255,255,0.6),
+    0 0 120px rgba(255,255,255,0.3);
+  z-index: -2;
+}
+
+
+.rocket {
+  position: fixed;
+  bottom: -120px;
+  left: 50%;
+  width: 24px;
+  height: 80px;
+  background: linear-gradient(#fff, #ccc);
+  border-radius: 12px;
+  transform: translateX(-50%);
+  animation: launch 6s infinite ease-in-out;
+  z-index: -1;
+}
+
+.rocket::before {
+  content: "";
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-left: 12px solid transparent;
+  border-right: 12px solid transparent;
+  border-bottom: 18px solid white;
+  transform: translateX(-50%);
+}
+
+.rocket::after {
+  content: "";
+  position: absolute;
+  bottom: -26px;
+  left: 50%;
+  width: 6px;
+  height: 26px;
+  background: linear-gradient(orange, red, transparent);
+  transform: translateX(-50%);
+  filter: blur(2px);
+}
+.rocket-explosion {
+  position: fixed;
+  top: 22%;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: transparent;
+  box-shadow:
+    0 -120px #00f7ff,
+    85px -60px #ff00cc,
+    120px 0 #7cff00,
+    85px 60px #00f7ff,
+    0 120px #ffae00,
+    -85px 60px #7cff00,
+    -120px 0 #00f7ff,
+    -85px -60px #ff00cc;
+  transform: translateX(-50%) scale(0);
+  animation: boom 6s infinite ease-out;
+  z-index: -1;
+}
+@keyframes launch {
+  0% {
+    bottom: -120px;
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  45% {
+    bottom: 50%;
+  }
+  70% {
+    bottom: 110%;
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes boom {
+  0%,
+  55% {
+    transform: translateX(-50%) scale(0);
+    opacity: 0;
+  }
+  65% {
+    transform: translateX(-50%) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-50%) scale(2.8);
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .rocket,
+  .rocket-explosion,
+  .deep-stars {
+    animation: none;
+  }
+}
